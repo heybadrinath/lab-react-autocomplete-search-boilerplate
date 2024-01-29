@@ -7,18 +7,22 @@ console.log(countryData);
 function App() {
   let [value, changeValue] = useState("");
   let [related, changeRelated] = useState([]);
-  let [show, changeShow] = useState(true)
+  let [show, changeShow] = useState(true);
 
   let check = (val) => {
-    let filteredCountries = countryData.filter((ele) => ele.name.startsWith(val));
-    val == "" ? changeRelated([]) :changeRelated(filteredCountries.map((ele) => ele.name));
+    let filteredCountries = countryData.filter((ele) =>
+      ele.name.toLowerCase().startsWith(val.toLowerCase())
+    );
+    val === ""
+      ? changeRelated([])
+      : changeRelated(filteredCountries.map((ele) => ele.name));
   };
   let focus = (key) => {
-    if(key.code == "Escape"){
-      key.target.blur()
-      changeShow(false)
+    if (key.code == "Escape") {
+      key.target.blur();
+      changeShow(false);
     }
-  }
+  };
 
   console.log(related);
 
@@ -31,14 +35,14 @@ function App() {
         onChange={(e) => {
           changeValue(e.target.value);
           check(e.target.value);
-          changeShow(true)
+          changeShow(true);
         }}
         onKeyDown={(key) => {
-          focus(key) 
+          focus(key);
         }}
       />
       <button>Search</button>
-      <div style={show ? {visibility:"visible"} : {visibility:"hidden"}}>
+      <div style={show ? { visibility: "visible" } : { visibility: "hidden" }}>
         {related.map((name) => (
           <p>{name}</p>
         ))}
